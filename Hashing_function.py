@@ -14,3 +14,5 @@ def hash(a):
     counter = 0
     index = sum(value) / len(a)
     return(int(index))
+
+
