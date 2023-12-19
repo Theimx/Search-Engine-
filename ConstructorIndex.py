@@ -29,18 +29,18 @@ with open(r"YourTxtFile.txt", 'r') as fp:
 #number of lines:
 nb_line = count + 1
 
-
-#Function to write and indexing a word : writeavar(indexing("Yourword"))
-
-#The piece of code who analyse,indexing
-file  = open("YourTxtFile.txt","r",encoding="utf8")
-lines = file.readlines()
-for n, line in enumerate(lines) :
-    writeavar(indexing(line))
-file.close()
-
 #A Function to determine the number of Lines of your Index and compare it to the first Txt File 
 #To see how many lines haves been collide
 #Enter the name of the two files you want to compare 
 def collide(a,b):
     test = 0
+
+
+#Function to write and indexing a word : writeavar(indexing("Yourword"))
+
+#The piece of code who analyse and indexing your file
+file  = open("YourTxtFile.txt","r",encoding="utf8")
+lines = file.readlines()
+for n, line in enumerate(lines) :
+    writeavar(indexing(line))
+file.close()
