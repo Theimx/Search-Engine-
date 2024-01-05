@@ -98,7 +98,16 @@ def get_coll(tableau_name, n, tableau):
     else:
         print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
         return []
-
+def del_coll(n, tableau_name, tableau):
+    if tableau_name in tableau:
+        for liste in tableau[tableau_name]:
+            if n < len(liste):
+                liste[n].value = None
+            else:
+                print(f"L'indice de colonne spécifié est hors de la plage de '{tableau_name}'.")
+    else:
+        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
+        
 def get_cells(tableau_name, indice_liste, indice_objet, tableau):
     if tableau_name in tableau:
         if indice_liste < len(tableau[tableau_name]):
