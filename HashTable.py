@@ -1,29 +1,3 @@
-
-def hashing(a):
-    counter = 0
-    hashing = []
-    value = []
-    index = 0
-    for i in range(len(a)):
-        hashing.append(a[counter])
-        counter += 1
-    counter = 0
-    for n in range(len(a)):
-        value.append(ord(hashing[counter]))
-        counter += 1
-    counter = 0
-    index = sum(value) / len(a)
-    return(int(index))
-    
-#a function to search a word in the table and return the content
-def read(a):
-    a = a 
-
-
-#FunctionToCreateTheArray(NameOfTheArray(string), nb_col(int), nb_row(int),LenghtOfTheRow(int))
-#FunctionToAddAnElement(NameOfTheArray(string), NumOfTheCol(int), NumOfTheRow(int),ElementToAdd)
-
-
 class EmptyCell:
     def __init__(self, value=None):
         self.value = value
@@ -41,7 +15,7 @@ def CreateArray(n, name, nb_line):
         tableau[name].append(nouvelle_liste)  # Ajoute la nouvelle liste à 'tableau'
     return tableau
 
-def ajout(element, indice_liste, indice_objet, tableau_name, tableau):
+def ad_cell(element, indice_liste, indice_objet, tableau_name, tableau):
     if tableau_name in tableau:
         if indice_liste < len(tableau[tableau_name]):
             if indice_objet < len(tableau[tableau_name][indice_liste]):
@@ -54,7 +28,7 @@ def ajout(element, indice_liste, indice_objet, tableau_name, tableau):
     else:
         print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
 
-def del_cells(indice_liste, indice_objet, tableau_name, tableau):
+def del_cell(indice_liste, indice_objet, tableau_name, tableau):
     if tableau_name in tableau:
         if indice_liste < len(tableau[tableau_name]):
             if indice_objet < len(tableau[tableau_name][indice_liste]):
@@ -98,16 +72,7 @@ def get_coll(tableau_name, n, tableau):
     else:
         print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
         return []
-def del_coll(n, tableau_name, tableau):
-    if tableau_name in tableau:
-        for liste in tableau[tableau_name]:
-            if n < len(liste):
-                liste[n].value = None
-            else:
-                print(f"L'indice de colonne spécifié est hors de la plage de '{tableau_name}'.")
-    else:
-        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
-        
+
 def get_cells(tableau_name, indice_liste, indice_objet, tableau):
     if tableau_name in tableau:
         if indice_liste < len(tableau[tableau_name]):
@@ -123,7 +88,16 @@ def get_cells(tableau_name, indice_liste, indice_objet, tableau):
         print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
         return None
 
-# Fonction pour afficher le tableau avec un espacement égal pour tous les éléments
+def del_coll(n, tableau_name, tableau):
+    if tableau_name in tableau:
+        for liste in tableau[tableau_name]:
+            if n < len(liste):
+                liste[n].value = None
+            else:
+                print(f"L'indice de colonne spécifié est hors de la plage de '{tableau_name}'.")
+    else:
+        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
+
 def afficher_tableau(tableau):
     max_length = 0  # Longueur maximale des éléments dans le tableau
     for key, value in tableau.items():
@@ -143,3 +117,33 @@ def afficher_tableau(tableau):
             print()
         print()
 
+def first_hash_function(a):
+    counter = 0
+    hashing = []
+    value = []
+    index = 0
+    for i in range(len(a)):
+        hashing.append(a[counter])
+        counter += 1
+    counter = 0
+    for n in range(len(a)):
+        value.append(ord(hashing[counter]))
+        counter += 1
+    counter = 0
+    index = sum(value) / len(a)
+    return(int(index))
+
+def second_hash_function(a, table_size=101):
+    index = 0
+    for char in a:
+        index = (index * 31 + ord(char)) % table_size
+    return index
+
+def third_hash_function(a, table_size=101):
+    index = 0
+    prime = 17
+    for char in a:
+        index = (index + ord(char)) * prime
+    return index % table_size
+
+print(first_hash_function("Test"), " ", second_hash_function("Test"), " ",third_hash_function("Test",))
