@@ -11,7 +11,7 @@ class HashTable:
             self.hash_table[column_name] = [column + 1] + [None] * (self.num_places_per_column - 1)
 
     def add_element(self, element):
-        # Appliquer la fonction de hachage à l'élément (vous pouvez remplacer hash_function par votre propre fonction de hachage)
+        # Appliquer la fonction de hachage à l'élément
         hashed_value = self.hash_function(element)
 
         # Trouver la colonne correspondante dans la table
@@ -29,8 +29,8 @@ class HashTable:
         # Si toutes les places sont occupées, ne rien faire ou gérer le cas selon vos besoins
 
     def hash_function(self, element):
-        # Exemple de fonction de hachage simple (vous pouvez la remplacer par une fonction plus complexe si nécessaire)
-        return len(element)
+        # Utiliser la fonction de hachage standard de Python
+        return hash(element)
 
     def display_table(self):
         print(f"Hash Table: {self.table_name}")
@@ -39,7 +39,7 @@ class HashTable:
 
 # Exemple d'utilisation
 table_name = "MaTable"
-num_columns = 100
+num_columns = 80
 num_places_per_column = 2
 
 # Création de la table de hachage avec les numéros de colonne
@@ -47,7 +47,23 @@ my_table = HashTable(table_name, num_columns, num_places_per_column)
 my_table.create_table()
 
 # Ajout d'éléments à la table de hachage
-elements_to_add = ["Hello", "World", "Python", "Hash", "Table", "Overflow"]
+elements_to_add = [
+    "python", "programmation", "intelligence", "artificielle", "apprentissage",
+    "algorithmes", "développement", "données", "modélisation", "analyse",
+    "scientifique", "machine", "réseaux", "neuronaux", "codage", "projet",
+    "open-source", "innovation", "technologie", "informatique", "syntaxe",
+    "bibliothèques", "framework", "programmeur", "web", "serveur", "clients",
+    "interface", "utilisateur", "base de données", "sécurité", "cryptographie",
+    "système", "exploitation", "cloud", "computing", "devops", "agile",
+    "méthodologie", "déploiement", "API", "gestion", "versions", "collaboration",
+    "repository", "documentation", "test", "validation", "intégration",
+    "débogage", "optimisation", "performances", "frontend", "backend",
+    "responsive", "design", "agilité", "scrum", "kanban", "workflow",
+    "productivité", "efficacité", "qualité", "maintenance", "support",
+    "communauté", "contributions", "opensource", "communication", "réunion",
+    "équipe", "compétences", "expertise", "domaine", "fonctionnalités",
+    "solutions", "conception", "architecture", "ingénierie", "logiciel"
+]
 for element in elements_to_add:
     my_table.add_element(element)
 
