@@ -1,149 +1,55 @@
-class EmptyCell:
-    def __init__(self, value=None):
-        self.value = value
+class HashTable:
+    def __init__(self, table_name, num_columns, num_places_per_column):
+        self.table_name = table_name
+        self.num_columns = num_columns
+        self.num_places_per_column = num_places_per_column
+        self.hash_table = {}
 
-    def __str__(self):
-        if self.value is None:
-            return "#"
-        else:
-            return str(self.value)
+    def create_table(self):
+        for column in range(self.num_columns):
+            column_name = f"Column_{column + 1}"
+            self.hash_table[column_name] = [column + 1] + [None] * (self.num_places_per_column - 1)
 
-def CreateArray(n, name, nb_line):
-    tableau = {name: []}  # Initialise la liste principale avec un nom donné
-    for _ in range(n):
-        nouvelle_liste = [EmptyCell() for _ in range(nb_line)]  # Crée une liste avec des objets EmptyCell
-        tableau[name].append(nouvelle_liste)  # Ajoute la nouvelle liste à 'tableau'
-    return tableau
+    def add_element(self, element):
+        # Appliquer la fonction de hachage à l'élément (vous pouvez remplacer hash_function par votre propre fonction de hachage)
+        hashed_value = self.hash_function(element)
 
-def ad_cell(element, indice_liste, indice_objet, tableau_name, tableau):
-    if tableau_name in tableau:
-        if indice_liste < len(tableau[tableau_name]):
-            if indice_objet < len(tableau[tableau_name][indice_liste]):
-                tableau[tableau_name][indice_liste][indice_objet].value = element
-                print(f"L'élément '{element}' a été ajouté à la case {indice_objet} de la liste {indice_liste} de '{tableau_name}'.")
-            else:
-                print(f"L'indice d'objet spécifié est hors de la plage de '{tableau_name}[{indice_liste}]'.")
-        else:
-            print(f"L'indice de liste spécifié est hors de la plage de '{tableau_name}'.")
-    else:
-        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
+        # Trouver la colonne correspondante dans la table
+        column_index = hashed_value % self.num_columns
+        column_name = f"Column_{column_index + 1}"  # Ajouter 1 pour ajuster l'index de colonne
 
-def del_cell(indice_liste, indice_objet, tableau_name, tableau):
-    if tableau_name in tableau:
-        if indice_liste < len(tableau[tableau_name]):
-            if indice_objet < len(tableau[tableau_name][indice_liste]):
-                tableau[tableau_name][indice_liste][indice_objet].value = None
-                print(f"La case {indice_objet} de la liste {indice_liste} de '{tableau_name}' a été vidée.")
-            else:
-                print(f"L'indice d'objet spécifié est hors de la plage de '{tableau_name}[{indice_liste}]'.")
-        else:
-            print(f"L'indice de liste spécifié est hors de la plage de '{tableau_name}'.")
-    else:
-        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
+        # Trouver la première case inoccupée dans la colonne
+        places = self.hash_table[column_name]
+        for i in range(1, len(places)):
+            if places[i] is None:
+                # Place inoccupée trouvée, placer l'élément
+                places[i] = element
+                return
 
-def del_row(indice_liste, tableau_name, tableau):
-    if tableau_name in tableau:
-        if indice_liste < len(tableau[tableau_name]):
-            for cellule in tableau[tableau_name][indice_liste]:
-                cellule.value = None
-            print(f"La liste {indice_liste} de '{tableau_name}' a été vidée.")
-        else:
-            print(f"L'indice de liste spécifié est hors de la plage de '{tableau_name}'.")
-    else:
-        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
+        # Si toutes les places sont occupées, ne rien faire ou gérer le cas selon vos besoins
 
-def get_row(indice_liste, tableau_name, tableau, exclude_empty=False):
-    if tableau_name in tableau:
-        if indice_liste < len(tableau[tableau_name]):
-            if exclude_empty:
-                return [cellule.value for cellule in tableau[tableau_name][indice_liste] if cellule.value is not None]
-            else:
-                return [cellule.value for cellule in tableau[tableau_name][indice_liste]]
-        else:
-            print(f"L'indice de liste spécifié est hors de la plage de '{tableau_name}'.")
-            return []
-    else:
-        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
-        return []
+    def hash_function(self, element):
+        # Exemple de fonction de hachage simple (vous pouvez la remplacer par une fonction plus complexe si nécessaire)
+        return len(element)
 
-def get_coll(tableau_name, n, tableau):
-    if tableau_name in tableau:
-        return [liste[n].value for liste in tableau[tableau_name] if n < len(liste)]
-    else:
-        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
-        return []
+    def display_table(self):
+        print(f"Hash Table: {self.table_name}")
+        for column, places in self.hash_table.items():
+            print(f"{column}: {places}")
 
-def get_cells(tableau_name, indice_liste, indice_objet, tableau):
-    if tableau_name in tableau:
-        if indice_liste < len(tableau[tableau_name]):
-            if indice_objet < len(tableau[tableau_name][indice_liste]):
-                return tableau[tableau_name][indice_liste][indice_objet].value
-            else:
-                print(f"L'indice d'objet spécifié est hors de la plage de '{tableau_name}[{indice_liste}]'.")
-                return None
-        else:
-            print(f"L'indice de liste spécifié est hors de la plage de '{tableau_name}'.")
-            return None
-    else:
-        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
-        return None
+# Exemple d'utilisation
+table_name = "MaTable"
+num_columns = 100
+num_places_per_column = 2
 
-def del_coll(n, tableau_name, tableau):
-    if tableau_name in tableau:
-        for liste in tableau[tableau_name]:
-            if n < len(liste):
-                liste[n].value = None
-            else:
-                print(f"L'indice de colonne spécifié est hors de la plage de '{tableau_name}'.")
-    else:
-        print(f"Le nom '{tableau_name}' n'existe pas dans le tableau.")
+# Création de la table de hachage avec les numéros de colonne
+my_table = HashTable(table_name, num_columns, num_places_per_column)
+my_table.create_table()
 
-def afficher_tableau(tableau):
-    max_length = 0  # Longueur maximale des éléments dans le tableau
-    for key, value in tableau.items():
-        for liste in value:
-            for cellule in liste:
-                cellule_length = len(str(cellule))
-                if cellule_length > max_length:
-                    max_length = cellule_length
+# Ajout d'éléments à la table de hachage
+elements_to_add = ["Hello", "World", "Python", "Hash", "Table", "Overflow"]
+for element in elements_to_add:
+    my_table.add_element(element)
 
-    for key, value in tableau.items():
-        print(f"{key}:")
-        for liste in value:
-            for cellule in liste:
-                cellule_str = str(cellule)
-                espacement = " " * ((max_length - len(cellule_str)) // 2)
-                print(f"{espacement}{cellule_str}{espacement}", end=" ")
-            print()
-        print()
-
-def first_hash_function(a):
-    counter = 0
-    hashing = []
-    value = []
-    index = 0
-    for i in range(len(a)):
-        hashing.append(a[counter])
-        counter += 1
-    counter = 0
-    for n in range(len(a)):
-        value.append(ord(hashing[counter]))
-        counter += 1
-    counter = 0
-    index = sum(value) / len(a)
-    return(int(index))
-
-def second_hash_function(a, table_size=101):
-    index = 0
-    for char in a:
-        index = (index * 31 + ord(char)) % table_size
-    return index
-
-def third_hash_function(a, table_size=101):
-    index = 0
-    prime = 17
-    for char in a:
-        index = (index + ord(char)) * prime
-    return index % table_size
-
-print(first_hash_function("Test"), " ", second_hash_function("Test"), " ",third_hash_function("Test",))
+# Affichage de la table de hachage avec les éléments ajoutés
+my_table.display_table()
