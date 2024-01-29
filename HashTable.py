@@ -28,6 +28,10 @@ class HashTable:
 
         # Si toutes les places sont occupées, ne rien faire ou gérer le cas selon vos besoins
 
+    def get_column_content(self, column_name):
+        # Récupérer le contenu de la colonne spécifiée
+        return self.hash_table.get(column_name, [])
+
     def hash_function(self, element):
         # Utiliser la fonction de hachage standard de Python
         return hash(element)
@@ -39,7 +43,7 @@ class HashTable:
 
 # Exemple d'utilisation
 table_name = "MaTable"
-num_columns = 80
+num_columns = 100
 num_places_per_column = 2
 
 # Création de la table de hachage avec les numéros de colonne
@@ -69,3 +73,8 @@ for element in elements_to_add:
 
 # Affichage de la table de hachage avec les éléments ajoutés
 my_table.display_table()
+
+# Récupération du contenu d'une colonne spécifique
+column_name_to_get = "Column_1"
+column_content = my_table.get_column_content(column_name_to_get)
+print(f"Contenu de la colonne {column_name_to_get}: {column_content}")
