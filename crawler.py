@@ -1,8 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
-URL = "https://datascientest.com/sql-tout-savoir#:~:text=SQL%20ou%20%C2%AB%20Structured%20Query%20Language,les%20donn%C3%A9es%20qu'elles%20contiennent."
+URL = "https://info.blaisepascal.fr/gerer-une-base-de-donnees-avec-python/"
 page = requests.get(URL)
 soup = BeautifulSoup(page.content, "html.parser")
-titles = soup.find_all("h1")
-for title in titles:
-  print(title)
+
+titles0 = soup.find_all("title")
+for title0 in titles0:
+  print(title0)
+
+titles1 = soup.find_all("h1")
+for title1 in titles1:
+  print(title1)
+
+titles2 = soup.find_all("h2")
+for title2 in titles2:
+  print(title2)
+
