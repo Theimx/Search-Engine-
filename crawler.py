@@ -25,9 +25,9 @@ for link in cliquableLinkOnThePage:
 print(urlOnThePage)
 
 #-------------------------------------------------------------
-
 import requests
 from bs4 import BeautifulSoup
+
 URL = "https://movies2watch.to/watch-movie/watch-spider-man-into-the-spider-verse-sequel-full-66674.9653188"
 page = requests.get(URL)
 soup = BeautifulSoup(page.content, "html.parser")
@@ -66,8 +66,7 @@ for title in titles_3:
   
 import requests
 from bs4 import BeautifulSoup
- 
- 
+
 url = "https://42.fr/apres-42/"
 reqs = requests.get(url)
 soup = BeautifulSoup(reqs.text, 'html.parser')
