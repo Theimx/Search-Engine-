@@ -40,8 +40,8 @@ def analyse_et_insere_contenu(url, conn):
         # Récupérer les titres, sous-titres et texte restant de la page
         titre = soup.title.text.strip() if soup.title else ""
         sous_titre = ", ".join([h.text.strip() for h in soup.find_all(['h2', 'h3', 'h4', 'h5', 'h6'])])
-        texte = soup.get_text().strip()
-
+        texte = '\n'.join(filter(lambda x: x.strip(), soup.stripped_strings))  # Supprimer les lignes vides
+       
         # Insérer les données dans la nouvelle table
         cursor.execute("INSERT INTO contenu_pages (url, titre, sous_titre, texte) VALUES (?, ?, ?, ?)",
                        (url, titre, sous_titre, texte))
