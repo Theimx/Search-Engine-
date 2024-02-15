@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résultats de la recherche</title>
+    <title>Résultats de recherche</title>
 </head>
 <body>
-    <h1>Résultats de la recherche pour "{{ keyword }}" :</h1>
-    <!-- Afficher la barre de recherche avec le mot-clé précédent -->
-    <form method="post">
-        <input type="text" name="keyword" value="{{ keyword }}">
-        <input type="submit" value="Rechercher">
-    </form>
+    <h1>Résultats de recherche pour "{{ query }}"</h1>
     <ul>
-        {% for link in results %}
-            <li><a href="{{ link[0] }}">{{ link[0] }}</a></li>
-        {% endfor %}
+    {% for url, scores in scores_tfidf.items() %}
+        <li>
+            <strong>{{ url }}</strong>
+            <ul>
+            {% for terme, score in scores.items() %}
+                <li>Terme: {{ terme }}, Score TF-IDF: {{ score }}</li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
     </ul>
 </body>
 </html>

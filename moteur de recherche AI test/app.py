@@ -1,34 +1,46 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, render_template
 import sqlite3
+from tfidf import tfidf
 
 app = Flask(__name__)
 
-conn = sqlite3.connect('links.db')
-c = conn.cursor()
-c.execute('''CREATE TABLE IF NOT EXISTS links (id INTEGER PRIMARY KEY, url TEXT)''')
-conn.commit()
-conn.close()
+def connect_database():
+    return sqlite3.connect('liens.db')
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-    if request.method == 'POST':
-        keyword = request.form['keyword']
-        # Traiter la recherche ici
-        return render_template('results.html', keyword=keyword)
     return render_template('index.html')
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        keyword = request.form['keyword']
-        conn = sqlite3.connect('links.db')
-        c = conn.cursor()
-        c.execute("SELECT url FROM links WHERE url LIKE ?", ('%' + keyword + '%',))
-        results = c.fetchall()
-        conn.close()
-        return render_template('results.html', keyword=keyword, results=results)
-    return render_template('index.html')
+@app.route('/rechercher')
+def rechercher():
+    # Connexion à la base de données
+    conn = connect_database()
 
+    # Récupérer la requête de recherche depuis l'URL
+    query = request.args.get('query')
 
-if __name__ == '__main__':
+    # Récupérer tous les documents de la base de données
+    cursor = conn.cursor()
+    cursor.execute("SELECT url, texte FROM contenu_pages")
+    corpus = [{'url': row[0], 'texte': row[1]} for row in cursor.fetchall()]
+    cursor.close()
+
+    # Termes à rechercher
+    termes_recherches = query.split()  # Diviser la requête en termes individuels
+
+    # Calcul des scores TF-IDF
+    scores_tfidf = tfidf(termes_recherches, corpus)
+
+    # Fermeture de la connexion à la base de données
+    conn.close()
+
+    # Affichage des résultats
+    return render_template('resultats.html', query=query, scores_tfidf=scores_tfidf)
+
+if __name__ == "__main__":
+    # Créer la base de données si elle n'existe pas
+    from DataBase import create_database
+    create_database()
+
+    # Lancer l'application Flask
     app.run(debug=True)
