@@ -1,0 +1,8 @@
+body {
+    text-align: center; /* Pour centrer le texte horizontalement */
+}
+
+.container {
+    margin: 0 auto; /* Pour centrer le contenu dans la page */
+    max-width: 800px; /* Largeur maximale du contenu */
+}

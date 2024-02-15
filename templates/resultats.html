@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de recherche</title>
+    <style>
+        body {
+            text-align: center; /* Pour centrer le texte horizontalement */
+        }
+
+        .container {
+            margin: 0 auto; /* Pour centrer le contenu dans la page */
+            max-width: 800px; /* Largeur maximale du contenu */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Résultats de recherche pour "{{ query }}"</h1>
+        <ul>
+        {% for url, scores in scores_tfidf.items() %}
+            <li>
+                <strong>{{ url }}</strong>
+                <ul>
+                {% for terme, score in scores.items() %}
+                    <li>Terme: {{ terme }}, Score TF-IDF: {{ score }}</li>
+                {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
