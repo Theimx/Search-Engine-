@@ -26,7 +26,7 @@ def extraire_liens_et_sauvegarder(liens_a_crawler, conn):
             print(f"Échec de la requête pour la page {url}. Code d'état : {response.status_code}")
 
 #--------------------------------------------------------------------------------------------
-liens_a_crawler = ['https://42.fr/', 'https://example.com']  # Ajoutez les liens que vous souhaitez crawler ici
+liens_a_crawler = ['https://42.fr/', 'https://example.com']
 
 create_database()
 conn = sqlite3.connect('liens.db')
