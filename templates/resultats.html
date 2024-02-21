@@ -16,8 +16,18 @@
     </style>
 </head>
 <body>
+    <!-- Barre de recherche -->
     <div class="container">
-        <h1>Résultats de recherche pour "{{ query }}"</h1>
+        <h1>Rechercher sur le Web</h1>
+        <form action="/rechercher" method="get">
+            <input type="text" name="query" placeholder="Entrez votre recherche">
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+
+    <!-- Section des résultats de recherche -->
+    <div class="container">
+        <h2>Résultats de recherche pour "{{ query }}"</h2>
         <ul>
         {% for url, scores in scores_tfidf.items() %}
             <li>

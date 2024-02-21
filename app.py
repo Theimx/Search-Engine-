@@ -81,3 +81,4 @@ def analyse_et_insere_contenu(url, conn):
 
     # Fermeture du curseur
     cursor.close()
+
